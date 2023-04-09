@@ -2,7 +2,7 @@ import { IShortLink, IEncode, IDecode, IStatistics } from "../interface/shortlin
 import ShortStringGenerator from "../helperMethods/short_string_generator";
 
 class ShortLinkService{
-    private port = process.env.PORT || 3000
+    private port = process.env.PORT || 3005
     private array_of_urls: IShortLink[] = []
     private shortStringGenerator = new ShortStringGenerator()
 
