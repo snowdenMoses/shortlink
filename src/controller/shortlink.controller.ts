@@ -1,5 +1,5 @@
 import { type NextFunction, type Request, type Response } from 'express'
-import { IShortLink, type IEncode, type IDecode, type IStatistics } from '../interface/shortlink.interface'
+import { type IEncode, type IDecode, type IStatistics } from '../interface/shortlink.interface'
 import ShortLinkService from '../service/shortlink.service'
 
 class ShortLinkController {
