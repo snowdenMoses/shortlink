@@ -1,47 +1,48 @@
-import { NextFunction, Request, Response } from 'express';
-import { IShortLink, IEncode, IDecode, IStatistics } from "../interface/shortlink.interface";
-import ShortLinkService from "../service/shortlink.service";
+import { type NextFunction, type Request, type Response } from 'express'
+import { IShortLink, type IEncode, type IDecode, type IStatistics } from '../interface/shortlink.interface'
+import ShortLinkService from '../service/shortlink.service'
 
-class ShortLinkController{
-    private shortLinkService = new ShortLinkService()
+class ShortLinkController {
+  private readonly shortLinkService = new ShortLinkService()
 
-    public encodeURL = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const { long_url } = req.body
-            const short_url: IEncode = await this.shortLinkService.encodeURL(long_url);
-            res.status(200).json( short_url );
-        } catch (error) {
-            next(error);
-        }
+  public encodeURL = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { longUrl } = req.body
+      const shortUrl: IEncode = await this.shortLinkService.encodeURL(longUrl)
+      res.status(200).json(shortUrl)
+    } catch (error) {
+      next(error)
     }
-    public decodeURL = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const { short_url_id } = req.body
-            const long_url: IDecode = await this.shortLinkService.decodeURL(short_url_id);
-            res.status(200).json( long_url );
-        } catch (error) {
-            next(error);
-        }
-    }
+  }
 
-    public getShortUrlStatistics = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const { short_url_id } = req.params
-            const long_url: IStatistics = await this.shortLinkService.getShortUrlStatistics(short_url_id);
-            res.status(200).json( long_url );
-        } catch (error) {
-            next(error);
-        }
+  public decodeURL = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { shortUrlId } = req.body
+      const longUrl: IDecode = await this.shortLinkService.decodeURL(shortUrlId)
+      res.status(200).json(longUrl)
+    } catch (error) {
+      next(error)
     }
+  }
 
-    public redirectShortUrlToLongUrl = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const { short_url_id } = req.params
-            const url_object: IDecode = await this.shortLinkService.decodeURL(short_url_id); 
-            res.redirect(url_object.long_url);
-        } catch (error) {
-            next(error);
-        }
+  public getShortUrlStatistics = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { shortUrlId } = req.params
+      const longUrl: IStatistics = await this.shortLinkService.getShortUrlStatistics(shortUrlId)
+      res.status(200).json(longUrl)
+    } catch (error) {
+      next(error)
     }
+  }
+
+  public redirectShortUrlToLongUrl = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { shortUrlId } = req.params
+      const url_object: IDecode = await this.shortLinkService.decodeURL(shortUrlId)
+      res.redirect(url_object.longUrl)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 export default ShortLinkController

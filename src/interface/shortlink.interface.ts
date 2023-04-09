@@ -1,13 +1,13 @@
-export interface IShortLink{
-    short_url_id: string;
-    url: string
+export interface IShortLink {
+  shortUrlId: string
+  url: string
 }
 export interface IEncode {
-    short_url: string;
+  shortUrl: string
 }
 export interface IDecode {
-    long_url: string 
+  longUrl: string
 }
 export interface IStatistics {
-    originally_gotten_from: string;
+  originalUrl: string
 }

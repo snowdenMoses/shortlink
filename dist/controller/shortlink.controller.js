@@ -18,9 +18,9 @@ class ShortLinkController {
         this.shortLinkService = new shortlink_service_1.default();
         this.encodeURL = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { long_url } = req.body;
-                const short_url = yield this.shortLinkService.encodeURL(long_url);
-                res.status(200).json(short_url);
+                const { longUrl } = req.body;
+                const shortUrl = yield this.shortLinkService.encodeURL(longUrl);
+                res.status(200).json(shortUrl);
             }
             catch (error) {
                 next(error);
@@ -28,9 +28,9 @@ class ShortLinkController {
         });
         this.decodeURL = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { short_url_id } = req.body;
-                const long_url = yield this.shortLinkService.decodeURL(short_url_id);
-                res.status(200).json(long_url);
+                const { shortUrlId } = req.body;
+                const longUrl = yield this.shortLinkService.decodeURL(shortUrlId);
+                res.status(200).json(longUrl);
             }
             catch (error) {
                 next(error);
@@ -38,9 +38,9 @@ class ShortLinkController {
         });
         this.getShortUrlStatistics = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { short_url_id } = req.params;
-                const long_url = yield this.shortLinkService.getShortUrlStatistics(short_url_id);
-                res.status(200).json(long_url);
+                const { shortUrlId } = req.params;
+                const longUrl = yield this.shortLinkService.getShortUrlStatistics(shortUrlId);
+                res.status(200).json(longUrl);
             }
             catch (error) {
                 next(error);
@@ -48,9 +48,9 @@ class ShortLinkController {
         });
         this.redirectShortUrlToLongUrl = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { short_url_id } = req.params;
-                const url_object = yield this.shortLinkService.decodeURL(short_url_id);
-                res.redirect(url_object.long_url);
+                const { shortUrlId } = req.params;
+                const url_object = yield this.shortLinkService.decodeURL(shortUrlId);
+                res.redirect(url_object.longUrl);
             }
             catch (error) {
                 next(error);

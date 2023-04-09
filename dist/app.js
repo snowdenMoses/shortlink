@@ -11,7 +11,7 @@ class App {
         this.port = process.env.PORT || 3005;
         this.initializeServer = (route) => {
             this.app.use(express_1.default.json());
-            this.app.use("/", route.router);
+            this.app.use('/', route.router);
             this.app.listen(this.port, () => {
                 console.log(`Listening on port ${this.port}`);
             });

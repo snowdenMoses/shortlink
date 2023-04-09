@@ -16,29 +16,29 @@ const short_string_generator_1 = __importDefault(require("../helperMethods/short
 class ShortLinkService {
     constructor() {
         this.port = process.env.PORT || 3005;
-        this.array_of_urls = [];
+        this.arrayOfUrls = [];
         this.shortStringGenerator = new short_string_generator_1.default();
     }
     encodeURL(url) {
         return __awaiter(this, void 0, void 0, function* () {
-            const short_url_id = this.shortStringGenerator.generateString();
-            this.array_of_urls.push({ short_url_id, url });
-            const short_url = `http://localhost:${this.port}/${short_url_id}`;
-            return { short_url };
+            const shortUrlId = this.shortStringGenerator.generateString();
+            this.arrayOfUrls.push({ shortUrlId, url });
+            const shortUrl = `http://localhost:${this.port}/${shortUrlId}`;
+            return { shortUrl };
         });
     }
-    decodeURL(short_url_id) {
+    decodeURL(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = this.array_of_urls.find(url => url.short_url_id === short_url_id);
-            const long_url = url === null || url === void 0 ? void 0 : url.url;
-            return { long_url };
+            const url = this.arrayOfUrls.find(url => url.shortUrlId === shortUrlId);
+            const longUrl = url === null || url === void 0 ? void 0 : url.url;
+            return { longUrl };
         });
     }
-    getShortUrlStatistics(short_url_id) {
+    getShortUrlStatistics(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = this.array_of_urls.find(url => url.short_url_id === short_url_id);
+            const url = this.arrayOfUrls.find(url => url.shortUrlId === shortUrlId);
             const long_url = url.url;
-            return { originally_gotten_from: long_url };
+            return { originalUrl: long_url };
         });
     }
 }
