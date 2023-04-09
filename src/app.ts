@@ -1,22 +1,24 @@
 import express from 'express'
-import ShortLinkRoute from './routes/shortlink.route'
 import { type IRoutes } from './interface/route.interface'
 
 class App {
-  private readonly app = express()
+  public app = express()
   private readonly port = process.env.PORT || 3005
-  constructor (route: any) {
-    this.initializeServer(route)
-  }
+//   constructor (route: any) {
+//     this.initializeServer(route)
+//   }
 
-  private readonly initializeServer = (route: IRoutes) => {
+  public initializeServer = (route: IRoutes) => {
     this.app.use(express.json())
     this.app.use('/', route.router)
-    this.app.listen(this.port, () => {
-      console.log(`Listening on port ${this.port}`)
-    })
   }
+  public listen = () => {
+        const server = this.app.listen(this.port, () => {
+            console.log(`Listening on port ${this.port}`)
+        })
+        return server
+    }
 }
 
-const route = new ShortLinkRoute()
-const server = new App(route)
+export default App
+

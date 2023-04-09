@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "dev": "nodemon ./dist/app.js",
+    "dev": "nodemon ./dist/server.js",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
