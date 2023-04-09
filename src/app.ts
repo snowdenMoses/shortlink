@@ -16,7 +16,6 @@ class App {
             console.log(`Listening on port ${this.port}`)
         })
     }
-
 }
 
 const route = new ShortLinkRoute()

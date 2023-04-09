@@ -4,7 +4,8 @@
   "description": "**About This Project**\r This project takes in a long url, encodes it to short url. Visiting the short url directs users to the long url",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest",
+    "dev": "nodemon ./dist/app.js"
   },
   "keywords": [],
   "author": "",

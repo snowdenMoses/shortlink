@@ -7,18 +7,18 @@ class ShortLinkController{
 
     public encodeURL = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { url } = req.body
-            const short_url: IEncode = await this.shortLinkService.encodeURL(url);
-            res.status(200).json({ short_url });
+            const { long_url } = req.body
+            const short_url: IEncode = await this.shortLinkService.encodeURL(long_url);
+            res.status(200).json( short_url );
         } catch (error) {
             next(error);
         }
     }
     public decodeURL = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { short_url } = req.body
-            const long_url: IDecode = await this.shortLinkService.decodeURL(short_url);
-            res.status(200).json({ long_url });
+            const { short_url_id } = req.body
+            const long_url: IDecode = await this.shortLinkService.decodeURL(short_url_id);
+            res.status(200).json( long_url );
         } catch (error) {
             next(error);
         }
@@ -26,9 +26,9 @@ class ShortLinkController{
 
     public getShortUrlStatistics = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { short_url } = req.body
-            const long_url: IDecode = await this.shortLinkService.decodeURL(short_url);
-            res.status(200).json({ long_url });
+            const { short_url_id } = req.params
+            const long_url: IStatistics = await this.shortLinkService.getShortUrlStatistics(short_url_id);
+            res.status(200).json( long_url );
         } catch (error) {
             next(error);
         }
@@ -36,9 +36,9 @@ class ShortLinkController{
 
     public redirectShortUrlToLongUrl = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { short_url } = req.params
-            const long_url: IDecode = await this.shortLinkService.decodeURL(short_url);
-            res.redirect(long_url.long_url);
+            const { short_url_id } = req.params
+            const url_object: IDecode = await this.shortLinkService.decodeURL(short_url_id); 
+            res.redirect(url_object.long_url);
         } catch (error) {
             next(error);
         }

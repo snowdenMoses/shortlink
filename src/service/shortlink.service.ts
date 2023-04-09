@@ -7,22 +7,22 @@ class ShortLinkService{
     private shortStringGenerator = new ShortStringGenerator()
 
     public async encodeURL(url: string): Promise<IEncode> {
-            const generated_string = this.shortStringGenerator.generateString()
-            this.array_of_urls.push({ generated_string, url });
-            const short_url = `http://localhost:${this.port}/${generated_string}`;
-            return { short_url }
+        const short_url_id = this.shortStringGenerator.generateString()
+        this.array_of_urls.push({ short_url_id, url });
+        const short_url = `http://localhost:${this.port}/${short_url_id}`;
+        return {short_url}
     }
 
-    public async decodeURL(short_url: string): Promise<IDecode> {
-            const url: IShortLink | undefined = this.array_of_urls.find(url => url.generated_string === short_url);
-            const long_url = url?.url
-            return { long_url }
-       
+    public async decodeURL(short_url_id: string): Promise<IDecode> {
+        const url: IShortLink = this.array_of_urls.find(url => url.short_url_id === short_url_id)!;
+        const long_url = url?.url
+        return { long_url }
+            
     }
-    public async getShortUrlStatistics(short_url: string): Promise<IStatistics> {
-            const url = this.array_of_urls.find(url => url.generated_string === short_url);
-            const long_url = url?.url
-            return { originally_gotten_from: long_url }
+    public async getShortUrlStatistics(short_url_id: string): Promise<IStatistics> {
+        const url = this.array_of_urls.find(url => url.short_url_id === short_url_id)!;
+        const long_url: string = url.url
+        return { originally_gotten_from: long_url}
        
     }
 }
