@@ -4,7 +4,7 @@ WITHOUT DOCKER FILE
 1. run the following command
     npm install - #to install all the dependencies
     npm run dev - #To run the app locally
-    npm run test - #To run jest test on the app
+    npm run test - #To run test on the app
 
 2. The project has the following endpoints
     i.  localhost:3005/encode  (POST request method)
@@ -28,7 +28,7 @@ WITH DOCKER
 1.  run the following command
     docker build -t imagename .    -#to build the docker image
     docker run -p 3005:3005 imagename      -#to run the project    
-    docker run -e CI=true imagename npm       -#To run jest test on the app
+    docker run -e CI=true imagename npm run test       -#To run test on the app
 
 2.  Same as above
 3.  Same as above
