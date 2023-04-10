@@ -83,5 +83,13 @@ describe("POST /statistics/:shortUrlId", () => {
             const response = await request(app.app).get("/statistics/shortUrl")
             expect(response.body.originalUrl).toBeDefined()
         })
+        test("response has shortUrlLength", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.body.shortUrlLength).toBeDefined()
+        })
+        test("response has isSEOFriendly", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.body.isSEOFriendly).toBeDefined()
+        })
     })
 })
