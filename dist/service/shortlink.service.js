@@ -13,32 +13,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const short_string_generator_1 = __importDefault(require("../helperMethods/short_string_generator"));
+const http_exception_1 = require("../helperMethods/http_exception");
 class ShortLinkService {
     constructor() {
         this.port = process.env.PORT || 3005;
         this.arrayOfUrls = [];
         this.shortStringGenerator = new short_string_generator_1.default();
     }
-    encodeURL(url) {
+    encodeURL(longUrl) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (!longUrl)
+                throw new http_exception_1.HttpException(404, "Not Found");
             const shortUrlId = this.shortStringGenerator.generateString();
-            this.arrayOfUrls.push({ shortUrlId, url });
+            const createdAt = (new Date()).toDateString();
+            this.arrayOfUrls.push({ shortUrlId, longUrl, createdAt });
             const shortUrl = `http://localhost:${this.port}/${shortUrlId}`;
             return { shortUrl };
         });
     }
     decodeURL(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = this.arrayOfUrls.find(url => url.shortUrlId === shortUrlId);
-            const longUrl = url === null || url === void 0 ? void 0 : url.url;
+            if (!shortUrlId)
+                throw new http_exception_1.HttpException(404, "Not Found");
+            const filteredUrl = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId);
+            let longUrl = "";
+            for (let i = 0; i < filteredUrl.length; i++) {
+                longUrl = filteredUrl[i].longUrl;
+            }
             return { longUrl };
         });
     }
     getShortUrlStatistics(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = this.arrayOfUrls.find(url => url.shortUrlId === shortUrlId);
-            const long_url = url.url;
-            return { originalUrl: long_url };
+            if (!shortUrlId)
+                throw new http_exception_1.HttpException(404, "Not Found");
+            const filteredUrl = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId);
+            let longUrl = "";
+            let createdAt = "";
+            for (let i = 0; i < filteredUrl.length; i++) {
+                longUrl = filteredUrl[i].longUrl;
+                createdAt = filteredUrl[i].createdAt;
+            }
+            return {
+                originalUrl: longUrl,
+                createdAt
+            };
         });
     }
 }

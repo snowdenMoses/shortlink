@@ -3,31 +3,29 @@ const request = require("supertest");
 import App from "./app"
 
 const app = new App()
+
 describe("POST /encode", () => {
-    describe("given a lengthy url", () => {
-        // Should respond with a 200 status code
+    describe("given a long url", () => {
         test("Should respond with a 200 status code", async () => {
             const response = await request(app.app).post('/encode').send({
-                url: "url"
+                longUrl: "longUrl"
             })
             expect(response.statusCode).toBe(200)
         })
-        // should specify json in the content type header
         test("Should specify json in the content type header", async () => {
             const response = await request(app.app).post('/encode').send({
-                url: "url"
+                longUrl: "longUrl"
             })
             expect(response.headers['content-type']).toEqual(expect.stringContaining("json"))
         })
         test("response has shorturl", async () => {
             const response = await request(app.app).post('/encode').send({
-                url: "url"
+                longUrl: "longUrl"
             })
             expect(response.body.shortUrl).toBeDefined()
         })
     })
-    describe("when the original url value is empty", () => {
-        // Should respond with a status code
+    describe("when the long url value is empty", () => {
         test("Should respond with a 404 status code", async () => {
             const response = await request(app.app).post('/encode').send({
 
@@ -37,35 +35,53 @@ describe("POST /encode", () => {
     })
 })
 describe("POST /decode", () => {
-    describe("given a short url as an id", () => {
-        // Should respond with a 200 status code
+    describe("given a shortUrlId to be decode", () => {
         test("Should respond with a 200 status code", async () => {
             const response = await request(app.app).post('/decode').send({
-                id: "short id"
+                shortUrlId: "shortUrlId"
             })
             expect(response.statusCode).toBe(200)
         })
-        // should specify json in the content type header
         test("Should specify json in the content type header", async () => {
             const response = await request(app.app).post('/decode').send({
-                id: "short id"
+                shortUrlId: "shortUrlId"
             })
             expect(response.headers['content-type']).toEqual(expect.stringContaining("json"))
         })
-        test("response has long_url", async () => {
+        test("response has long url", async () => {
             const response = await request(app.app).post('/decode').send({
-                id: "short url"
+                shortUrlId: "shortUrlId"
             })
-            expect(response.body.long_url).toBeDefined()
+            expect(response.body.longUrl).toBeDefined()
         })
     })
     describe("when the short url value is empty", () => {
-        // Should respond with a status code
         test("Should respond with a 404 status code", async () => {
             const response = await request(app.app).post('/decode').send({
 
             })
             expect(response.statusCode).toBe(404)
+        })
+    })
+})
+
+describe("POST /statistics/:shortUrlId", () => {
+    describe("given a shortUrlId  so as to get it's statistics", () => {
+        test("Should respond with a 200 status code", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.statusCode).toBe(200)
+        })
+        test("Should specify json in the content type header", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.headers['content-type']).toEqual(expect.stringContaining("json"))
+        })
+        test("response has originalUrl", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.body.originalUrl).toBeDefined()
+        })
+        test("response has createdAt", async () => {
+            const response = await request(app.app).get("/statistics/shortUrl")
+            expect(response.body.originalUrl).toBeDefined()
         })
     })
 })

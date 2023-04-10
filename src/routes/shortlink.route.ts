@@ -13,9 +13,9 @@ class ShortLinkRoute implements IRoutes {
 
   private initializeRoutes () {
     this.router.get(`${this.path}/:shortUrlId`, this.shortLinkController.redirectShortUrlToLongUrl)
+    this.router.get(`${this.path}/statistics/:shortUrlId`, this.shortLinkController.getShortUrlStatistics)
     this.router.post(`${this.path}/encode`, this.shortLinkController.encodeURL)
     this.router.post(`${this.path}/decode`, this.shortLinkController.decodeURL)
-    this.router.post(`${this.path}/statistics/:shortUrlId`, this.shortLinkController.getShortUrlStatistics)
   }
 }
 export default ShortLinkRoute

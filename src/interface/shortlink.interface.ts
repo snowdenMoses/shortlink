@@ -1,6 +1,7 @@
 export interface IShortLink {
   shortUrlId: string
-  url: string
+  longUrl: string
+  createdAt: string
 }
 export interface IEncode {
   shortUrl: string
@@ -10,4 +11,5 @@ export interface IDecode {
 }
 export interface IStatistics {
   originalUrl: string
+  createdAt: string
 }
