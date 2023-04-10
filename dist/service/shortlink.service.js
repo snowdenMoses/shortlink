@@ -23,10 +23,12 @@ class ShortLinkService {
     encodeURL(longUrl) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!longUrl)
-                throw new http_exception_1.HttpException(404, "Not Found");
+                throw new http_exception_1.HttpException(404, 'Not Found');
             const shortUrlId = this.shortStringGenerator.generateString();
             const createdAt = (new Date()).toDateString();
-            this.arrayOfUrls.push({ shortUrlId, longUrl, createdAt });
+            const shortUrlLength = shortUrlId.length;
+            const isSEOFriendly = true;
+            this.arrayOfUrls.push({ shortUrlId, longUrl, createdAt, shortUrlLength, isSEOFriendly });
             const shortUrl = `http://localhost:${this.port}/${shortUrlId}`;
             return { shortUrl };
         });
@@ -34,9 +36,9 @@ class ShortLinkService {
     decodeURL(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!shortUrlId)
-                throw new http_exception_1.HttpException(404, "Not Found");
+                throw new http_exception_1.HttpException(404, 'Not Found');
             const filteredUrl = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId);
-            let longUrl = "";
+            let longUrl = '';
             for (let i = 0; i < filteredUrl.length; i++) {
                 longUrl = filteredUrl[i].longUrl;
             }
@@ -46,18 +48,16 @@ class ShortLinkService {
     getShortUrlStatistics(shortUrlId) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!shortUrlId)
-                throw new http_exception_1.HttpException(404, "Not Found");
+                throw new http_exception_1.HttpException(404, 'Not Found');
             const filteredUrl = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId);
-            let longUrl = "";
-            let createdAt = "";
+            let statistics = { originalUrl: "", createdAt: "", shortUrlLength: 0, isSEOFriendly: false };
             for (let i = 0; i < filteredUrl.length; i++) {
-                longUrl = filteredUrl[i].longUrl;
-                createdAt = filteredUrl[i].createdAt;
+                statistics['originalUrl'] = filteredUrl[i].longUrl;
+                statistics['createdAt'] = filteredUrl[i].createdAt;
+                statistics['shortUrlLength'] = filteredUrl[i].shortUrlLength;
+                statistics['isSEOFriendly'] = filteredUrl[i].isSEOFriendly;
             }
-            return {
-                originalUrl: longUrl,
-                createdAt
-            };
+            return Object.assign({}, statistics);
         });
     }
 }

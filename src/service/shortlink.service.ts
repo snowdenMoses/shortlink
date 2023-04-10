@@ -8,37 +8,37 @@ class ShortLinkService {
   private readonly shortStringGenerator = new ShortStringGenerator()
 
   public async encodeURL (longUrl: string): Promise<IEncode> {
-    if (!longUrl) throw new HttpException(404, "Not Found")
+    if (!longUrl) throw new HttpException(404, 'Not Found')
     const shortUrlId = this.shortStringGenerator.generateString()
     const createdAt: string = (new Date()).toDateString()
-    this.arrayOfUrls.push({ shortUrlId, longUrl, createdAt })
+    const shortUrlLength: number = shortUrlId.length
+    const isSEOFriendly: boolean = true
+    this.arrayOfUrls.push({ shortUrlId, longUrl, createdAt, shortUrlLength, isSEOFriendly })
     const shortUrl = `http://localhost:${this.port}/${shortUrlId}`
     return { shortUrl }
   }
 
   public async decodeURL (shortUrlId: string): Promise<IDecode> {
-    if (!shortUrlId) throw new HttpException(404, "Not Found")
+    if (!shortUrlId) throw new HttpException(404, 'Not Found')
     const filteredUrl: IShortLink[] = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId)
-    let longUrl:string =""
-      for (let i = 0; i < filteredUrl.length; i++){
-          longUrl = filteredUrl[i].longUrl
-      }
-      return { longUrl }
+    let longUrl: string = ''
+    for (let i = 0; i < filteredUrl.length; i++) {
+      longUrl = filteredUrl[i].longUrl
+    }
+    return { longUrl }
   }
 
   public async getShortUrlStatistics (shortUrlId: string): Promise<IStatistics> {
-    if (!shortUrlId) throw new HttpException(404, "Not Found")
+    if (!shortUrlId) throw new HttpException(404, 'Not Found')
     const filteredUrl: IShortLink[] = this.arrayOfUrls.filter(url => url.shortUrlId === shortUrlId)
-    let longUrl: string = ""
-    let createdAt: string = ""
+    let statistics: IStatistics = {originalUrl:"", createdAt:"", shortUrlLength:0, isSEOFriendly:false}
     for (let i = 0; i < filteredUrl.length; i++) {
-        longUrl = filteredUrl[i].longUrl
-        createdAt = filteredUrl[i].createdAt
+      statistics['originalUrl'] = filteredUrl[i].longUrl
+      statistics['createdAt'] = filteredUrl[i].createdAt
+      statistics['shortUrlLength'] = filteredUrl[i].shortUrlLength
+      statistics['isSEOFriendly'] = filteredUrl[i].isSEOFriendly
     }
-    return { 
-        originalUrl: longUrl, 
-        createdAt
-    }
+    return { ...statistics }
   }
 }
 export default ShortLinkService

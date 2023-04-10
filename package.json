@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "dev": "nodemon ./dist/server.js",
+    "dev": "concurrently -k \"tsc -w\" \"nodemon ./dist/server.js\"",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "@types/node": "^18.15.11",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "concurrently": "^8.0.1",
     "eslint": "^8.38.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.27.5",

@@ -66,7 +66,7 @@ describe("POST /decode", () => {
 })
 
 describe("POST /statistics/:shortUrlId", () => {
-    describe("given a shortUrlId  so as to get it's statistics", () => {
+    describe("given a shortUrlId so as to get it's statistics", () => {
         test("Should respond with a 200 status code", async () => {
             const response = await request(app.app).get("/statistics/shortUrl")
             expect(response.statusCode).toBe(200)
