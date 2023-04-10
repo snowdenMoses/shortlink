@@ -1,6 +1,6 @@
 After cloning the repository from github, Do the following 
 
-WITHOUT DOCKER FILE
+WITHOUT DOCKER
 1. run the following command
     npm install - #to install all the dependencies
     npm run dev - #To run the app locally
