@@ -16,7 +16,7 @@ WITHOUT DOCKER
 
     ii. localhost:3005/decode  (POST request method)
 
-    iii.    localhost:3005/statistics/:shortUrlId  (POST request method)
+    iii.    localhost:3005/statistics/:shortUrlId  (GET request method)
 
 3.  the "localhost:3005/encode" endpoint takes in a json body of 
 
